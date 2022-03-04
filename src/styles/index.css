@@ -1,10 +1,19 @@
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
+#root {
+  width: 40%; 
+  margin: 0 auto;
+}
 .github-profile {
-	margin: 1rem;
-} 
+	margin: 1rem; 
+  display: flex; 
+  flex-direction: row; 
+}  
+.image {
+  width: 10%; 
+  height: 20%;
+}
   .img {
     width: 75px;
   }
