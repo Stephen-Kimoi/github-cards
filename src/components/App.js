@@ -1,4 +1,5 @@
 import * as React from 'react'; 
+import axios from 'axios'; 
 
 const testData = [
 			{name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook"},
@@ -18,11 +19,10 @@ class Form extends React.Component {
    userName : '', 
  }
 
- handleSubmit = (event) => { 
+ handleSubmit = async (event) => { 
   event.preventDefault(); 
-  console.log( 
-    this.userNameInput.current.value
-  ); 
+  const resp =  await axios.get(`https://api.github.com/users/${this.state.userName}`); 
+  this.props.onSubmit(resp.data);  
  } 
 
   render () {
@@ -60,12 +60,18 @@ class Card extends React.Component {
 class App2 extends React.Component {  
   state = {
     profiles : testData, 
+  }  
+  addNewProfile = (newProfiles) => {
+    this.setState( prevState => ({
+      profiles: [...prevState.profiles, newProfiles]
+    }))
   }
+  
   render () {
         return (
         <div>
           <div className="header">{this.props.title}</div>   
-          <Form /> 
+          <Form onSubmit={this.addNewProfile}/> 
           <CardList profiles={this.state.profiles}/>  
         </div>
       )
